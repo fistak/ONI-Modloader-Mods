@@ -540,73 +540,33 @@
             }
         }
 
-        [HarmonyPatch(typeof(Global), "GenerateDefaultBindings")]
-        public static class Global_GenerateDefaultBindings
+        // TODO: Extract and refactor for reuse
+        // find better place for patching
+        // remove useless logging
+        [HarmonyPatch(typeof(Global), "Awake")]
+        public static class MaterialColor_Prepare
         {
-            public static void Postfix(ref BindingEntry[] __result)
+            [HarmonyPrepare]
+            public static void Prepare()
             {
-                try
-                {
-                    List<BindingEntry> bind = __result.ToList();
-                    BindingEntry entry = new BindingEntry(
-                                                          "Root",
-                                                          GamepadButton.NumButtons,
-                                                          KKeyCode.F6,
-                                                          Modifier.Alt,
-                                                          (Action)IDs.ToggleMaterialColorOverlayAction,
-                                                          true,
-                                                          true);
-                    bind.Add(entry);
-                    __result = bind.ToArray();
-                }
-                catch (Exception e)
-                {
-                    State.Logger.Log("Keybindings failed:\n" + e);
-                    throw;
-                }
+                OverlayMenuManager.ScheduleOverlayButton(
+                    new OverlayRegisterData(
+                        "MaterialColor",
+                        "Toggles MaterialColor overlay",
+                        OnMaterialColorOverlayToggle,
+                        KKeyCode.F1,
+                        Modifier.Shift | Modifier.Ctrl
+                    ));
             }
-        }
 
-        [HarmonyPatch(typeof(OverlayMenu), "InitializeToggles")]
-        public static class OverlayMenu_InitializeToggles
-        {
-            // TODO: read from file instead
-            public static void Postfix(OverlayMenu __instance, ref List<KIconToggleMenu.ToggleInfo> __result)
+            private static void OnMaterialColorOverlayToggle()
             {
-				Type oti = AccessTools.Inner(typeof(OverlayMenu), "OverlayToggleInfo");
-				
-				ConstructorInfo ci =  oti.GetConstructor(new Type[] { typeof(string), typeof(string), typeof(SimViewMode), typeof(string), typeof(Action), typeof(string), typeof(string) });
-				object ooti = ci.Invoke(new object[] {
-						"Toggle MaterialColor",
-						"overlay_materialcolor",
-						(SimViewMode)IDs.ToggleMaterialColorOverlayID,
-						string.Empty,
-						(Action)IDs.ToggleMaterialColorOverlayAction,
-						"Toggles MaterialColor overlay",
-						"MaterialColor"
-				});
-				((KIconToggleMenu.ToggleInfo)ooti).getSpriteCB = GetUISprite;
+                // TODO
+                Debug.Log("OnMaterialColorOverlayToggle");
 
-				__result.Add((KIconToggleMenu.ToggleInfo)ooti);
+                State.ConfiguratorState.Enabled = !State.ConfiguratorState.Enabled;
 
-				/*
-				__result.Add(
-                             new OverlayMenu.OverlayToggleInfo(
-                                                               "Toggle MaterialColor",
-                                                               "overlay_materialcolor",
-                                                               (SimViewMode)IDs.ToggleMaterialColorOverlayID,
-                                                               string.Empty,
-                                                               (Action)IDs.ToggleMaterialColorOverlayAction,
-                                                               "Toggles MaterialColor overlay",
-                                                               "MaterialColor") {
-                                                                                   getSpriteCB = () => GetUISprite()
-                                                                                });
-				*/
-			}
-
-            private static Sprite GetUISprite()
-            {
-                return FileManager.LoadSpriteFromFile(Paths.MaterialColorOverlayIconPath, 256, 256);
+                RefreshMaterialColor();
             }
         }
 
@@ -662,40 +622,6 @@
 				SetField(__instance, "mActionState", new bool[1000]);
 			}
 		}
-
-		[HarmonyPatch(typeof(OverlayMenu), "OnToggleSelect")]
-        public static class OverlayMenu_OnToggleSelect_MatCol
-        {
-            [HarmonyPrefix]
-
-            // ReSharper disable once InconsistentNaming
-            public static bool EnterToggle(OverlayMenu __instance, KIconToggleMenu.ToggleInfo toggle_info)
-            {
-                try
-                {
-					//bool toggleMaterialColor = ((OverlayMenu.OverlayToggleInfo)toggle_info).simView
-					bool toggleMaterialColor = (SimViewMode)GetField(toggle_info, "simView")
-											== (SimViewMode)IDs.ToggleMaterialColorOverlayID;
-
-                    if (!toggleMaterialColor)
-                    {
-                        return true;
-                    }
-
-                    State.ConfiguratorState.Enabled = !State.ConfiguratorState.Enabled;
-
-                    RefreshMaterialColor();
-
-                    return false;
-                }
-                catch (Exception e)
-                {
-                    State.Logger.Log("EnterToggle failed.");
-                    State.Logger.Log(e);
-                    return true;
-                }
-            }
-        }
 
         /// <summary>
         /// Material + element color
