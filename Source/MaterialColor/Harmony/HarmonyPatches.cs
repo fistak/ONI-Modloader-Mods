@@ -36,6 +36,15 @@
 
         public static void OnLoad()
         {
+            OverlayMenuManager.ScheduleOverlayButton(
+                new OverlayRegisterData(
+                    "MaterialColor Overlay",
+                    "Toggles MaterialColor overlay",
+                    OnMaterialColorOverlayToggle,
+                    KKeyCode.F6,
+                    Modifier.Alt
+                ));
+
             // HarmonyInstance harmony = HarmonyInstance.Create("com.oni.materialcolor");
             // harmony.PatchAll(Assembly.GetExecutingAssembly());
 
@@ -64,6 +73,13 @@
             // State.Logger.Log("Custom temperature overlay init error");
             // State.Logger.Log(e);
             // }
+        }
+
+        private static void OnMaterialColorOverlayToggle()
+        {
+            State.ConfiguratorState.Enabled = !State.ConfiguratorState.Enabled;
+
+            RefreshMaterialColor();
         }
 
         public static void RefreshMaterialColor()
@@ -537,31 +553,6 @@
             public static void Prefix()
             {
                 UpdateQueueManager.OnGameUpdate();
-            }
-        }
-
-        // find better place for patching
-        [HarmonyPatch(typeof(Global), "Awake")]
-        public static class MaterialColor_Prepare
-        {
-            [HarmonyPrepare]
-            public static void Prepare()
-            {
-                OverlayMenuManager.ScheduleOverlayButton(
-                    new OverlayRegisterData(
-                        "MaterialColor Overlay",
-                        "Toggles MaterialColor overlay",
-                        OnMaterialColorOverlayToggle,
-                        KKeyCode.F6,
-                        Modifier.Alt
-                    ));
-            }
-
-            private static void OnMaterialColorOverlayToggle()
-            {
-                State.ConfiguratorState.Enabled = !State.ConfiguratorState.Enabled;
-
-                RefreshMaterialColor();
             }
         }
 
