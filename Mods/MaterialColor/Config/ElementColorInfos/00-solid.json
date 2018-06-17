@@ -29,6 +29,14 @@
       "Green": 1.0,
       "Blue": 0.4
     },
+    "Brightness": 0.8
+  },
+  "Ceramic": {
+    "ColorMultiplier": {
+      "Red": 0.9,
+      "Green": 1.0,
+      "Blue": 0.5
+    },
     "Brightness": 0.9
   },
   "Copper": {
@@ -49,19 +57,19 @@
   },
   "Diamond": {
     "ColorMultiplier": {
-      "Red": 0.9,
+      "Red": 0.5,
       "Green": 0.7,
-      "Blue": 0.05
+      "Blue": 1
     },
-    "Brightness": 0.85
+    "Brightness": 0.95
   },
   "Dirt": {
     "ColorMultiplier": {
-      "Red": 0.6,
-      "Green": 0.3,
-      "Blue": 0.2
+      "Red": 1,
+      "Green": 0.6,
+      "Blue": 0.4
     },
-    "Brightness": 0.7
+    "Brightness": 0.5
   },
   "DirtyIce": {
     "ColorMultiplier": {
@@ -94,6 +102,14 @@
       "Blue": 0.25
     },
     "Brightness": 0.9
+  },
+  "Glass": {
+    "ColorMultiplier": {
+      "Red": 0.9,
+      "Green": 1,
+      "Blue": 0.65
+    },
+    "Brightness": 1
   },
   "Gold": {
     "ColorMultiplier": {
@@ -130,26 +146,26 @@
   "IgneousRock": {
     "ColorMultiplier": {
       "Red": 1.0,
-      "Green": 0.85,
-      "Blue": 0.85
+      "Green": 0.75,
+      "Blue": 0.75
     },
     "Brightness": 0.5
   },
   "Iron": {
     "ColorMultiplier": {
-      "Red": 0.4,
-      "Green": 1.0,
-      "Blue": 0.9
+      "Red": 1,
+      "Green": 0.55,
+      "Blue": 0.55
     },
-    "Brightness": 0.9
+    "Brightness": 0.85
   },
   "IronOre": {
     "ColorMultiplier": {
-      "Red": 0.1,
+      "Red": 0.4,
       "Green": 1.0,
-      "Blue": 0.7
+      "Blue": 0.95
     },
-    "Brightness": 0.9
+    "Brightness": 0.7
   },
   "Katairite": {
     "ColorMultiplier": {
@@ -158,6 +174,14 @@
       "Blue": 1.0
     },
     "Brightness": 0.9
+  },
+  "MaficRock": {
+    "ColorMultiplier": {
+      "Red": 1,
+      "Green": 1,
+      "Blue": 1
+    },
+    "Brightness": 0.6
   },
   "Obsidian": {
     "ColorMultiplier": {
@@ -249,9 +273,9 @@
   },
   "Steel": {
     "ColorMultiplier": {
-      "Red": 0.4,
-      "Green": 0.8,
-      "Blue": 0.9
+      "Red": 0.35,
+      "Green": 0.9,
+      "Blue": 1
     },
     "Brightness": 1.0
   },
