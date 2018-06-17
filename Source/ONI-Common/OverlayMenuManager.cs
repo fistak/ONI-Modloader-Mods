@@ -7,19 +7,16 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-// fix namespace
-namespace MaterialColor
+namespace ONI_Common
 {
-    /* TODO: - move to appropriate place */
-
     /// <summary>
-    /// Allows for adding buttons to OverlayMenu, together with Hotkeys. Requires ONI-Common.
+    /// Allows for adding buttons to OverlayMenu, together with Hotkeys.
     /// </summary>
     public static class OverlayMenuManager
     {
         // TODO:
         // - test with two seperate libraries, check for duplicating Actions/SimViewModes
-        // - check its appearance in controls
+        // - there is an odd string in controls
         public static void ScheduleOverlayButton(OverlayRegisterData registerData)
         {
             int freeActionID = GetFirstFreeEnum(typeof(Action), ReservedActionsValues);
@@ -160,13 +157,12 @@ namespace MaterialColor
     public static class OverlayMenu_OnToggleSelect_MatCol
     {
         [HarmonyPrefix]
-
         // ReSharper disable once InconsistentNaming
         public static bool EnterToggle(OverlayMenu __instance, KIconToggleMenu.ToggleInfo toggle_info)
         {
             try
             {
-                SimViewMode viewMode = (SimViewMode)GetField(toggle_info, "simView");
+                SimViewMode viewMode = (SimViewMode)AccessTools.Field(typeof(KIconToggleMenu.ToggleInfo), "simView").GetValue(toggle_info);
 
                 foreach (var subscriber in OverlayMenuManager.Subscribers)
                 {
@@ -194,13 +190,6 @@ namespace MaterialColor
                 return true;
             }
         }
-
-        // taken from MaterialColor.HarmonyPatches
-		private static object GetField(object _instance, string name)
-		{
-			FieldInfo fi = AccessTools.Field(_instance.GetType(), name);
-			return fi.GetValue(_instance);
-		}
     }
 
     // TODO: add sprite
