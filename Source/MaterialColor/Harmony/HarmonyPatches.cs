@@ -623,6 +623,8 @@
                         case SimViewMode.GasVentMap:
                         case SimViewMode.LiquidVentMap:
                         case SimViewMode.Logic:
+                        case SimViewMode.SolidConveyorMap:
+                        case SimViewMode.SuitRequiredMap:
                             RefreshMaterialColor();
                             break;
                     }
