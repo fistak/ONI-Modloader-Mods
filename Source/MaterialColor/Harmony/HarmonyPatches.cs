@@ -101,7 +101,7 @@
                 color = ColorHelper.DefaultColor;
             }
 
-            if (State.TileNames.Contains(buildingName))
+            if (State.ConfiguratorState.TileNames.Contains(buildingName))
             {
                 try
                 {

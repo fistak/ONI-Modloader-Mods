@@ -18,19 +18,6 @@
         [NotNull]
         public static readonly List<float> DefaultTemperatures = new List<float>();
 
-        // TODO: load from file instead
-        [NotNull]
-        public static readonly List<string> TileNames = new List<string>
-                                                        {
-                                                        "Tile",
-                                                        "MeshTile",
-                                                        "InsulationTile",
-                                                        "GasPermeableMembrane",
-                                                        "TilePOI",
-                                                        "PlasticTile",
-                                                        "MetalTile"
-                                                        };
-
         private static MaterialColorState _configuratorState;
 
         private static Dictionary<SimHashes, ElementColorInfo> _elementColorInfos;

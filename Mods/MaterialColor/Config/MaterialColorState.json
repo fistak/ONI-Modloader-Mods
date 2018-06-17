@@ -9,5 +9,16 @@
   "GasPressureStart": 0.1,
   "GasPressureEnd": 2.5,
   "ShowEarDrumPopMarker": true,
-  "AdvancedGasOverlayDebugging": false
+  "AdvancedGasOverlayDebugging": false,
+  "TileNames": [
+    "Tile",
+    "MeshTile",
+    "InsulationTile",
+    "GasPermeableMembrane",
+    "TilePOI",
+    "PlasticTile",
+    "MetalTile",
+    "GlassTile",
+    "BunkerTile"
+  ]
 }

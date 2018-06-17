@@ -1,4 +1,6 @@
-﻿namespace ONI_Common.Data
+﻿using System.Collections.Generic;
+
+namespace ONI_Common.Data
 {
     public class MaterialColorState
     {
@@ -39,5 +41,7 @@
         public bool ShowMissingElementColorInfos { get; set; }
 
         public bool ShowMissingTypeColorOffsets { get; set; }
+
+        public string[] TileNames { get; set; }
     }
 }
