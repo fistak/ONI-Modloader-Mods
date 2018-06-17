@@ -540,9 +540,7 @@
             }
         }
 
-        // TODO: Extract and refactor for reuse
         // find better place for patching
-        // remove useless logging
         [HarmonyPatch(typeof(Global), "Awake")]
         public static class MaterialColor_Prepare
         {
@@ -551,19 +549,16 @@
             {
                 OverlayMenuManager.ScheduleOverlayButton(
                     new OverlayRegisterData(
-                        "MaterialColor",
+                        "MaterialColor Overlay",
                         "Toggles MaterialColor overlay",
                         OnMaterialColorOverlayToggle,
-                        KKeyCode.F1,
-                        Modifier.Shift | Modifier.Ctrl
+                        KKeyCode.F6,
+                        Modifier.Alt
                     ));
             }
 
             private static void OnMaterialColorOverlayToggle()
             {
-                // TODO
-                Debug.Log("OnMaterialColorOverlayToggle");
-
                 State.ConfiguratorState.Enabled = !State.ConfiguratorState.Enabled;
 
                 RefreshMaterialColor();

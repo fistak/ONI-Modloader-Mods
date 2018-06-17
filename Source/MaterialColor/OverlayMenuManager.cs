@@ -10,10 +10,7 @@ using System.Text;
 // fix namespace
 namespace MaterialColor
 {
-    /* TODO:
-       - move to appropriate place
-       - remove useless logging
-    */
+    /* TODO: - move to appropriate place */
 
     /// <summary>
     /// Allows for adding buttons to OverlayMenu, together with Hotkeys. Requires ONI-Common.
@@ -76,8 +73,6 @@ namespace MaterialColor
         {
             try
             {
-                State.Logger.Log("OverlayMenu.InitializeToggles Postfix enter");
-
                 Type overlayToggleInfo = AccessTools.Inner(typeof(OverlayMenu), "OverlayToggleInfo");
                 ConstructorInfo ci = overlayToggleInfo.GetConstructor(new Type[] { typeof(string), typeof(string), typeof(SimViewMode), typeof(string), typeof(Action), typeof(string), typeof(string) });
 
@@ -86,13 +81,13 @@ namespace MaterialColor
                     try
                     {
                         object toggleInfo = ci.Invoke(new object[] {
-                            subscriber.RegisterData.Name,
-                            "overlay_materialcolor", // check importance
-                            subscriber.SimViewMode,
-                            string.Empty,
-                            subscriber.Action,
-                            subscriber.RegisterData.Description,
-                            "MaterialColor" // check importance
+                            subscriber.RegisterData.Name,           // text
+                            string.Empty,                           // icon
+                            subscriber.SimViewMode,                 // userdata
+                            string.Empty,                           // ???
+                            subscriber.Action,                      //
+                            subscriber.RegisterData.Description,    // tooltip
+                            subscriber.RegisterData.Name            // tooltip header
                         });
 
                         ((KIconToggleMenu.ToggleInfo)toggleInfo).getSpriteCB = GetUISprite;
@@ -111,8 +106,6 @@ namespace MaterialColor
                 State.Logger.Log($"General error @ OverlayMenuManager.OverlayMenu_InitializeToggles Postfix");
                 State.Logger.Log(e);
             }
-
-            State.Logger.Log("OverlayMenu.InitializeToggles Postfix exit");
         }
 
         private static UnityEngine.Sprite GetUISprite()
@@ -129,8 +122,6 @@ namespace MaterialColor
         {
             try
             {
-                State.Logger.Log("Global.GenerateDefaultBindings Postfix enter");
-
                 List<BindingEntry> binds = __result.ToList();
 
                 foreach (var subscriber in OverlayMenuManager.Subscribers)
@@ -156,8 +147,6 @@ namespace MaterialColor
                 }
 
                 __result = binds.ToArray();
-
-                State.Logger.Log("Global.GenerateDefaultBindings postfix exit");
             }
             catch (Exception e)
             {
