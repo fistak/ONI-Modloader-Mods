@@ -162,7 +162,7 @@ namespace ONI_Common
         {
             try
             {
-                SimViewMode viewMode = (SimViewMode)AccessTools.Field(typeof(KIconToggleMenu.ToggleInfo), "simView").GetValue(toggle_info);
+                SimViewMode viewMode = (SimViewMode)AccessTools.Field(toggle_info.GetType(), "simView").GetValue(toggle_info);
 
                 foreach (var subscriber in OverlayMenuManager.Subscribers)
                 {
