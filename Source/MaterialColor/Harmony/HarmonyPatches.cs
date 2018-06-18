@@ -41,6 +41,7 @@
                     "MaterialColor Overlay",
                     "Toggles MaterialColor overlay",
                     OnMaterialColorOverlayToggle,
+                    GetUISprite,
                     KKeyCode.F6,
                     Modifier.Alt
                 ));
@@ -73,6 +74,11 @@
             // State.Logger.Log("Custom temperature overlay init error");
             // State.Logger.Log(e);
             // }
+        }
+
+        private static UnityEngine.Sprite GetUISprite()
+        {
+            return FileManager.LoadSpriteFromFile(Paths.MaterialColorOverlayIconPath, 256, 256);
         }
 
         private static void OnMaterialColorOverlayToggle()

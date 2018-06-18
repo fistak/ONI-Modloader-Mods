@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using UnityEngine;
 
 namespace ONI_Common
 {
@@ -14,9 +15,7 @@ namespace ONI_Common
     /// </summary>
     public static class OverlayMenuManager
     {
-        // TODO:
-        // - test with two seperate libraries, check for duplicating Actions/SimViewModes
-        // - there is an odd string in controls
+        // TODO: fix odd string in controls
         public static void ScheduleOverlayButton(OverlayRegisterData registerData)
         {
             int freeActionID = GetFirstFreeEnum(typeof(Action), ReservedActionsValues);
@@ -87,7 +86,7 @@ namespace ONI_Common
                             subscriber.RegisterData.Name            // tooltip header
                         });
 
-                        ((KIconToggleMenu.ToggleInfo)toggleInfo).getSpriteCB = GetUISprite;
+                        ((KIconToggleMenu.ToggleInfo)toggleInfo).getSpriteCB = subscriber.RegisterData.GetSpriteCallback;
 
                         __result.Add((KIconToggleMenu.ToggleInfo)toggleInfo);
                     }
@@ -103,11 +102,6 @@ namespace ONI_Common
                 State.Logger.Log($"General error @ OverlayMenuManager.OverlayMenu_InitializeToggles Postfix");
                 State.Logger.Log(e);
             }
-        }
-
-        private static UnityEngine.Sprite GetUISprite()
-        {
-            return FileManager.LoadSpriteFromFile(Paths.MaterialColorOverlayIconPath, 256, 256);
         }
     }
 
@@ -195,7 +189,7 @@ namespace ONI_Common
     // TODO: add sprite
     public class OverlayRegisterData
     {
-        public OverlayRegisterData(string name, string description, System.Action callback, KKeyCode keyCode, Modifier modifierKey = Modifier.None, bool rebindable = true)
+        public OverlayRegisterData(string name, string description, System.Action callback, Func<Sprite> getSpriteCallback, KKeyCode keyCode, Modifier modifierKey = Modifier.None, bool rebindable = true)
         {
             this.Name = name;
             this.Description = description;
@@ -204,6 +198,8 @@ namespace ONI_Common
             this.KeyCode = keyCode;
             this.ModifierKey = modifierKey;
             this.Rebindable = rebindable;
+
+            this.GetSpriteCallback = getSpriteCallback;
         }
 
         public readonly string Name;
@@ -213,6 +209,8 @@ namespace ONI_Common
         public readonly Modifier ModifierKey;
         public readonly KKeyCode KeyCode;
         public readonly bool Rebindable;
+
+        public readonly Func<Sprite> GetSpriteCallback;
     }
 
     public class OverlaySubscriber
